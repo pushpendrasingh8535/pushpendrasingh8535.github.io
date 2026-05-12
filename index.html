@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UVM Phases — Deep Dive Interactive Guide</title>
+<title>UVM Phases + RAL — Interactive Deep Dive Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -753,6 +753,175 @@
   @media (max-width: 600px) {
     #sec-factory .compare-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── RAL section scoped styles ── */
+  #sec-ral .ral-hero {
+    background: linear-gradient(135deg, var(--panel) 0%, var(--panel2) 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid #f59e0b;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  #sec-ral .ral-hero h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.4rem; color: var(--text); }
+  #sec-ral .ral-hero p  { color: var(--text2); margin: 0; line-height: 1.7; font-size: 0.88rem; }
+
+  #sec-ral .rtab-bar {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+  #sec-ral .rtab-btn {
+    padding: 0.5rem 1.1rem; border: none;
+    background: transparent; color: var(--text3);
+    font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  #sec-ral .rtab-btn:hover { color: var(--text); }
+  #sec-ral .rtab-btn.active { color: #f59e0b; border-bottom-color: #f59e0b; }
+
+  #sec-ral .rtab-content { display: none; }
+  #sec-ral .rtab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+  #sec-ral h3 { font-size: 1rem; font-weight: 700; color: #f59e0b; margin: 1.2rem 0 0.5rem; }
+  #sec-ral p  { color: var(--text2); font-size: 0.88rem; line-height: 1.7; margin-bottom: 0.6rem; }
+
+  #sec-ral .rcard {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1rem;
+  }
+  #sec-ral .rcard-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+
+  /* hierarchy ladder */
+  #sec-ral .hier-ladder { display: flex; flex-direction: column; gap: 0; margin: 1rem 0; }
+  #sec-ral .hier-row {
+    display: flex; align-items: stretch; gap: 0;
+  }
+  #sec-ral .hier-connector {
+    display: flex; flex-direction: column; align-items: center;
+    width: 50px; flex-shrink: 0;
+  }
+  #sec-ral .hier-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 2px solid #f59e0b; background: var(--bg); margin-top: 1rem; z-index: 1;
+  }
+  #sec-ral .hier-line { width: 2px; flex: 1; background: var(--border); margin-top: 2px; }
+  #sec-ral .hier-row:last-child .hier-line { display: none; }
+  #sec-ral .hier-body {
+    flex: 1; padding: 0.8rem 0.8rem 0.8rem 0; min-height: 60px;
+  }
+  #sec-ral .hier-cls {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    color: #34d399; font-weight: 700; margin-bottom: 0.25rem;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  #sec-ral .hier-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.5; }
+
+  /* feature grid */
+  #sec-ral .feat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 0.8rem; margin: 1rem 0;
+  }
+  #sec-ral .feat-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.9rem 1rem;
+  }
+  #sec-ral .feat-card .ficon { font-size: 1.3rem; margin-bottom: 0.4rem; }
+  #sec-ral .feat-card .ftitle { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+  #sec-ral .feat-card .fdesc { font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
+
+  /* adapter flow */
+  #sec-ral .adapt-flow {
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap; margin: 1rem 0;
+  }
+  #sec-ral .abox {
+    flex: 1; min-width: 90px; padding: 0.6rem 0.8rem;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--panel2); text-align: center;
+    font-size: 0.78rem; font-weight: 600; color: var(--text2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  #sec-ral .abox.hl1 { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.35); color: #fbbf24; }
+  #sec-ral .abox.hl2 { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.35); color: #34d399; }
+  #sec-ral .abox.hl3 { background: rgba(0,212,255,0.1);  border-color: rgba(0,212,255,0.35);  color: #00d4ff; }
+  #sec-ral .aarr { color: var(--text3); font-size: 1.1rem; padding: 0 2px; }
+
+  /* predict flow boxes */
+  #sec-ral .pred-steps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 0.8rem; margin: 1rem 0;
+  }
+  #sec-ral .pred-step {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.9rem 1rem;
+    display: flex; gap: 0.7rem; align-items: flex-start;
+  }
+  #sec-ral .ps-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem; font-weight: 700; flex-shrink: 0;
+  }
+  #sec-ral .ps-num.amber { background: rgba(245,158,11,0.2); color: #fbbf24; }
+  #sec-ral .ps-num.cyan  { background: rgba(0,212,255,0.15);  color: #00d4ff; }
+  #sec-ral .ps-num.green { background: rgba(52,211,153,0.15); color: #34d399; }
+  #sec-ral .ps-body { flex: 1; }
+  #sec-ral .ps-title { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+  #sec-ral .ps-desc  { font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
+
+  /* info boxes */
+  #sec-ral .info-box {
+    border-radius: 8px; padding: 0.9rem 1.1rem;
+    border-left: 3px solid; font-size: 0.84rem;
+    line-height: 1.6; margin: 0.8rem 0; color: var(--text2);
+  }
+  #sec-ral .info-box.tip     { background: rgba(0,212,255,0.05);   border-color: var(--accent); }
+  #sec-ral .info-box.warn    { background: rgba(245,158,11,0.05);  border-color: #f59e0b; }
+  #sec-ral .info-box.success { background: rgba(52,211,153,0.05);  border-color: #34d399; }
+  #sec-ral .info-box.danger  { background: rgba(239,68,68,0.05);   border-color: var(--accent5); }
+  #sec-ral .info-box strong  {
+    display: block; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 0.3rem;
+  }
+  #sec-ral .info-box.tip     strong { color: var(--accent); }
+  #sec-ral .info-box.warn    strong { color: #f59e0b; }
+  #sec-ral .info-box.success strong { color: #34d399; }
+  #sec-ral .info-box.danger  strong { color: var(--accent5); }
+
+  /* seq table */
+  #sec-ral .seq-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 0.8rem 0; }
+  #sec-ral .seq-table th {
+    background: var(--panel2); padding: 0.55rem 0.9rem;
+    text-align: left; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--text3);
+    border-bottom: 1px solid var(--border);
+  }
+  #sec-ral .seq-table td {
+    padding: 0.65rem 0.9rem; border-bottom: 1px solid rgba(42,58,88,0.5);
+    color: var(--text2); vertical-align: top;
+  }
+  #sec-ral .seq-table tr:nth-child(even) td { background: rgba(0,0,0,0.1); }
+  #sec-ral .seq-table tr:last-child td { border-bottom: none; }
+  #sec-ral .seq-table .mono {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    color: #34d399;
+  }
+
+  /* code blocks inside RAL */
+  #sec-ral .code-block { background: #080d1a; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1rem 0; font-size: 0.8rem; }
+  #sec-ral .code-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; background: var(--panel2); border-bottom: 1px solid var(--border); font-size: 0.75rem; }
+  #sec-ral .code-filename { color: #f59e0b; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+  #sec-ral .code-lang { color: var(--text3); }
+  #sec-ral .code-body { padding: 1.2rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; line-height: 1.7; white-space: pre; color: var(--text2); }
+
+  /* image figure */
+  #sec-ral .fig {
+    background: var(--panel2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1rem; margin: 1rem 0; text-align: center;
+  }
+  #sec-ral .fig img { max-width: 100%; border-radius: 4px; }
+  #sec-ral .fig-cap { font-size: 0.72rem; color: var(--text3); margin-top: 0.5rem; font-style: italic; font-family: 'JetBrains Mono', monospace; }
 </style>
 </head>
 <body>
@@ -760,7 +929,7 @@
 <header>
   <div class="header-inner">
     <div>
-      <div class="logo">UVM Phases</div>
+      <div class="logo">UVM Phases + RAL</div>
       <div class="subtitle">Interactive Deep Dive Guide</div>
     </div>
     <nav>
@@ -773,6 +942,7 @@
       <button class="nav-btn" onclick="showSection('factory')">Factory</button>
       <button class="nav-btn" onclick="showSection('customphase')">Custom Phase</button>
       <button class="nav-btn" onclick="showSection('runtest')">run_test() Flow</button>
+      <button class="nav-btn" onclick="showSection('ral')">RAL Model</button>
     </nav>
   </div>
 </header>
@@ -781,6 +951,34 @@
 
 <!-- SIDEBAR -->
 <aside>
+  <div class="sidebar-section">
+    <div class="sidebar-label">RAL Model</div>
+    <div class="phase-nav-item" onclick="showSection('ral');event.stopPropagation();" style="color:#f59e0b">
+      <span class="phase-dot" style="background:#f59e0b"></span>
+      Overview
+    </div>
+    <div class="phase-nav-item" onclick="showSection('ral');setTimeout(()=>showRalTab('ral-adapter'),50);event.stopPropagation();" style="color:#f59e0b">
+      <span class="phase-dot" style="background:#f59e0b"></span>
+      Adapter & Map
+    </div>
+    <div class="phase-nav-item" onclick="showSection('ral');setTimeout(()=>showRalTab('ral-mem'),50);event.stopPropagation();" style="color:#f59e0b">
+      <span class="phase-dot" style="background:#f59e0b"></span>
+      uvm_mem
+    </div>
+    <div class="phase-nav-item" onclick="showSection('ral');setTimeout(()=>showRalTab('ral-predict'),50);event.stopPropagation();" style="color:#f59e0b">
+      <span class="phase-dot" style="background:#f59e0b"></span>
+      Predictor
+    </div>
+    <div class="phase-nav-item" onclick="showSection('ral');setTimeout(()=>showRalTab('ral-cov'),50);event.stopPropagation();" style="color:#f59e0b">
+      <span class="phase-dot" style="background:#f59e0b"></span>
+      Coverage
+    </div>
+    <div class="phase-nav-item" onclick="showSection('ral');setTimeout(()=>showRalTab('ral-seq'),50);event.stopPropagation();" style="color:#f59e0b">
+      <span class="phase-dot" style="background:#f59e0b"></span>
+      Built-in Seqs
+    </div>
+  </div>
+
   <div class="sidebar-section">
     <div class="sidebar-label">Build Domain</div>
     <div class="phase-nav-item" onclick="openPhase('build')" style="color:#3b82f6">
@@ -3861,303 +4059,889 @@ seq = <span class="cls">piso_seq</span>::<span class="fn">type_id</span>::<span 
 
 <!-- ── sec-runtest ─────────────────────────────────────────────────── -->
 <div id="sec-runtest" class="section">
-  <div style="max-width:1100px;">
+<style>
+/* ── run_test flowchart scoped styles ── */
+#sec-runtest .rt-wrap {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.4rem;
+  align-items: start;
+}
+#sec-runtest .rt-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+/* nodes */
+#sec-runtest .rt-node {
+  border-radius: 6px;
+  padding: 0.55rem 0.9rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  border: 1.5px solid;
+  position: relative;
+}
+#sec-runtest .rt-node.entry {
+  border-radius: 50px;
+  background: #dde8fc; border-color: #6c8ebf; color: #1e3a5f;
+  text-align: center;
+}
+#sec-runtest .rt-node.global {
+  background: #fff3d6; border-color: #c9a227; color: #5a3a00;
+}
+#sec-runtest .rt-node.singleton {
+  background: #ffeedd; border-color: #d6844a; color: #5a2800;
+}
+#sec-runtest .rt-node.bootstrap {
+  background: #fff9cc; border-color: #b8a020; color: #4a3800;
+}
+#sec-runtest .rt-node.object {
+  background: #e8f5e9; border-color: #4caf50; color: #1b5e20;
+}
+#sec-runtest .rt-node.fetch {
+  background: #e8eaf6; border-color: #7986cb; color: #1a237e;
+}
+#sec-runtest .rt-node.root-sing {
+  background: #e0f7fa; border-color: #26c6da; color: #004d5e;
+}
+#sec-runtest .rt-node.root-state {
+  background: #f3e5f5; border-color: #ab47bc; color: #4a0060;
+}
+#sec-runtest .rt-node.test-name {
+  background: #fff8e1; border-color: #ffca28; color: #4a3000;
+}
+#sec-runtest .rt-node.decision {
+  background: #fff; border-color: #e0e0e0; color: #333;
+  text-align: center; font-weight: 700;
+}
+#sec-runtest .rt-node.finish {
+  border-radius: 50px;
+  background: #dae8fc; border-color: #6c8ebf; color: #1e3a5f;
+  text-align: center; font-weight: 700;
+}
+/* labels */
+#sec-runtest .rt-label {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+/* connector / arrow */
+#sec-runtest .rt-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 2px 0;
+}
+#sec-runtest .rt-arrow .rt-line {
+  width: 2px; height: 18px; background: #4a5568;
+}
+#sec-runtest .rt-arrow .rt-tip {
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid #4a5568;
+}
+#sec-runtest .rt-arrow.short .rt-line { height: 10px; }
+#sec-runtest .rt-arrow.tall  .rt-line { height: 28px; }
+
+/* diamond decision */
+#sec-runtest .rt-diamond-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 6px 0;
+}
+#sec-runtest .rt-diamond {
+  width: 200px; height: 56px;
+  background: #fce4ec; border: 2px solid #e91e63;
+  transform: perspective(1px) skewX(-8deg);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+}
+#sec-runtest .rt-diamond span {
+  transform: skewX(8deg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; font-weight: 700; color: #880e4f;
+  text-align: center; line-height: 1.35;
+}
+
+/* branch row */
+#sec-runtest .rt-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 0.4rem 0;
+}
+#sec-runtest .rt-branch {
+  display: flex; flex-direction: column; gap: 0;
+}
+#sec-runtest .rt-branch-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  text-align: center; padding: 3px 8px;
+  border-radius: 4px; margin-bottom: 4px;
+}
+#sec-runtest .rt-branch-label.yes { background: #e8f5e9; color: #2e7d32; border: 1px solid #4caf50; }
+#sec-runtest .rt-branch-label.no  { background: #ffebee; color: #c62828; border: 1px solid #ef5350; }
+
+/* annotation panel */
+#sec-runtest .rt-annots {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  position: sticky;
+  top: 80px;
+}
+#sec-runtest .rt-ann {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.78rem;
+  color: var(--text2);
+  line-height: 1.6;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+#sec-runtest .rt-ann:hover { border-left-color: #f59e0b; background: var(--panel2); }
+#sec-runtest .rt-ann .ann-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; font-weight: 700;
+  color: var(--accent); margin-bottom: 4px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+#sec-runtest .rt-ann.active { border-left-color: #f59e0b; background: var(--panel2); }
+
+/* code inline in flowchart nodes */
+#sec-runtest .nc { color: #00d4ff; font-weight: 600; }
+#sec-runtest .nk { color: #c792ea; }
+#sec-runtest .nm { color: #82aaff; }
+#sec-runtest .ns { color: #c3e88d; }
+#sec-runtest .nd { color: #f78c6c; }
+
+/* detail cards below */
+#sec-runtest .detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+#sec-runtest .detail-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+}
+#sec-runtest .detail-card h3 {
+  font-size: 0.9rem; font-weight: 700;
+  color: var(--accent); margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+#sec-runtest .detail-card p {
+  font-size: 0.82rem; color: var(--text2); line-height: 1.7;
+}
+@media (max-width: 900px) {
+  #sec-runtest .rt-wrap { grid-template-columns: 1fr; }
+  #sec-runtest .rt-annots { position: relative; top: 0; }
+}
+</style>
+
+  <div style="max-width:1200px;">
 
     <div class="hero">
-      <h1>run_test() Flow</h1>
-      <p>A complete walkthrough of how UVM bootstraps from the top module's <code style="background:rgba(0,212,255,0.1);padding:2px 6px;border-radius:4px;color:var(--accent)">run_test()</code> call all the way through sequence–driver handshaking and final cleanup — including the factory, phase scheduling, TLM channel, and objection mechanism.</p>
+      <h1>run_test() Flow — Deep Internals</h1>
+      <p>A step-by-step trace of every object creation and function call from the moment <code style="background:rgba(0,212,255,0.1);padding:2px 6px;border-radius:4px;color:var(--accent)">run_test("")</code> fires in the initial block — through the singleton chain, UVM bootstrap, phase DAG construction, test-name resolution, and the YES/NO factory decision — down to the final <code style="background:rgba(0,212,255,0.1);padding:2px 6px;border-radius:4px;color:var(--accent)">$finish</code>.</p>
     </div>
 
-    <!-- Flowchart -->
-    <div class="card" style="margin-bottom:1.5rem;">
-      <h2 style="margin-bottom:1rem;">📊 run_test() Flowchart</h2>
-      <div style="overflow-x:auto; display:flex; justify-content:center;">
-        <svg viewBox="0 0 620 1480" xmlns="http://www.w3.org/2000/svg" style="max-width:620px;width:100%;font-family:'JetBrains Mono','Syne',sans-serif;">
-          <defs>
-            <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-              <polygon points="0 0, 8 3, 0 6" fill="#64748b"/>
-            </marker>
-            <marker id="arr-loop" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-              <polygon points="0 0, 8 3, 0 6" fill="#d6552b"/>
-            </marker>
-          </defs>
+    <div class="rt-wrap">
+    <!-- ── LEFT: Flowchart ── -->
+    <div class="rt-flow">
 
-          <!-- TOP MODULE -->
-          <rect x="120" y="10" width="354" height="38" rx="18" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
-          <text x="297" y="25" text-anchor="middle" fill="#1e3a5f" font-size="11" font-weight="700">TOP MODULE</text>
-          <text x="297" y="40" text-anchor="middle" fill="#1e3a5f" font-size="10">initial begin  run_test();  end</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="48" x2="297" y2="68" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- UVM FACTORY -->
-          <rect x="88" y="68" width="418" height="44" rx="8" fill="#ffe6cc" stroke="#d6b656" stroke-width="1.5"/>
-          <text x="297" y="84" text-anchor="middle" fill="#7a4000" font-size="11" font-weight="700">UVM FACTORY</text>
-          <text x="297" y="98" text-anchor="middle" fill="#7a4000" font-size="10">Reads +UVM_TESTNAME · resolves registered type · creates TEST</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="112" x2="297" y2="132" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- uvm_root -->
-          <rect x="104" y="132" width="386" height="36" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
-          <text x="297" y="148" text-anchor="middle" fill="#4a1a6e" font-size="11" font-weight="700">uvm_root takes control</text>
-          <text x="297" y="162" text-anchor="middle" fill="#4a1a6e" font-size="10">Schedules and drives all UVM phases in order</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="168" x2="297" y2="186" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- Phase rows: label col + desc col -->
-          <!-- build_phase -->
-          <rect x="0" y="186" width="142" height="42" fill="#1ba35b" stroke="#00694f" stroke-width="1.5"/>
-          <text x="71" y="204" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">build_phase</text>
-          <text x="71" y="218" text-anchor="middle" fill="#d1fae5" font-size="9">function · Top-Down</text>
-          <rect x="142" y="186" width="448" height="42" fill="#f0fff4" stroke="#1ba35b" stroke-width="1.5"/>
-          <text x="366" y="201" text-anchor="middle" fill="#14532d" font-size="9.5" font-weight="700">Top-down.</text>
-          <text x="366" y="215" text-anchor="middle" fill="#14532d" font-size="9">TEST→ENV→AGENT creates SEQUENCER+DRIVER+MONITOR via ::type_id::create()</text>
-          <text x="366" y="227" text-anchor="middle" fill="#14532d" font-size="9">VIF retrieved from uvm_config_db. Never use new() — bypasses factory.</text>
-
-          <!-- connect_phase -->
-          <rect x="0" y="228" width="142" height="42" fill="#1e6eb5" stroke="#0a4a8a" stroke-width="1.5"/>
-          <text x="71" y="246" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">connect_phase</text>
-          <text x="71" y="260" text-anchor="middle" fill="#bfdbfe" font-size="9">function · Bottom-Up</text>
-          <rect x="142" y="228" width="448" height="42" fill="#dae8fc" stroke="#1e6eb5" stroke-width="1.5"/>
-          <text x="366" y="243" text-anchor="middle" fill="#1e3a5f" font-size="9.5" font-weight="700">Bottom-up.</text>
-          <text x="366" y="257" text-anchor="middle" fill="#1e3a5f" font-size="9">AGENT binds TLM port: drv.seq_item_port.connect(sqr.seq_item_export)</text>
-          <text x="366" y="269" text-anchor="middle" fill="#1e3a5f" font-size="9">Creates physical channel between sequencer and driver. VIF assigned to driver.</text>
-
-          <!-- end_of_elaboration -->
-          <rect x="0" y="270" width="142" height="36" fill="#b46504" stroke="#7a4400" stroke-width="1.5"/>
-          <text x="71" y="286" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">end_of_elaboration</text>
-          <text x="71" y="299" text-anchor="middle" fill="#fef3c7" font-size="9">function · Bottom-Up</text>
-          <rect x="142" y="270" width="448" height="36" fill="#fff2cc" stroke="#b46504" stroke-width="1.5"/>
-          <text x="366" y="285" text-anchor="middle" fill="#78350f" font-size="9">Optional debug: this.print() shows component tree;</text>
-          <text x="366" y="299" text-anchor="middle" fill="#78350f" font-size="9">factory.print() shows registered types and active overrides.</text>
-
-          <!-- start_of_simulation -->
-          <rect x="0" y="306" width="142" height="32" fill="#b46504" stroke="#7a4400" stroke-width="1.5"/>
-          <text x="71" y="320" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">start_of_simulation</text>
-          <text x="71" y="332" text-anchor="middle" fill="#fef3c7" font-size="9">function · Bottom-Up</text>
-          <rect x="142" y="306" width="448" height="32" fill="#fff2cc" stroke="#b46504" stroke-width="1.5"/>
-          <text x="366" y="320" text-anchor="middle" fill="#78350f" font-size="9">Optional. Print TB structure before simulation time advances.</text>
-          <text x="366" y="332" text-anchor="middle" fill="#78350f" font-size="9">Helps catch mis-built components early. Similar to end_of_elaboration.</text>
-
-          <!-- run_phase -->
-          <rect x="0" y="338" width="142" height="42" fill="#7b2fa3" stroke="#5a1d7a" stroke-width="1.5"/>
-          <text x="71" y="356" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">run_phase</text>
-          <text x="71" y="370" text-anchor="middle" fill="#e9d5ff" font-size="9">task · Parallel threads</text>
-          <rect x="142" y="338" width="448" height="42" fill="#f3e6ff" stroke="#7b2fa3" stroke-width="1.5"/>
-          <text x="366" y="353" text-anchor="middle" fill="#4a1a6e" font-size="9">All component tasks run in parallel threads. TEST raises objection,</text>
-          <text x="366" y="367" text-anchor="middle" fill="#4a1a6e" font-size="9">creates sequence, starts it on sequencer. DRIVER runs forever-loop.</text>
-          <text x="366" y="379" text-anchor="middle" fill="#4a1a6e" font-size="9">Phase ends when all objections are dropped.</text>
-
-          <!-- arrow to sequence section -->
-          <line x1="297" y1="380" x2="297" y2="402" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- SECTION LABEL: run_phase Sequence Execution -->
-          <rect x="0" y="402" width="590" height="22" rx="4" fill="#f3e6ff" stroke="#7b2fa3" stroke-width="1.5"/>
-          <text x="295" y="417" text-anchor="middle" fill="#7b2fa3" font-size="11" font-weight="700">run_phase — Sequence Execution into UVC</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="424" x2="297" y2="444" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- raise_objection -->
-          <rect x="88" y="444" width="418" height="36" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
-          <text x="297" y="459" text-anchor="middle" fill="#78350f" font-size="11" font-weight="700">TEST : phase.raise_objection(this)</text>
-          <text x="297" y="473" text-anchor="middle" fill="#78350f" font-size="10">Prevents run_phase from ending before stimulus completes</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="480" x2="297" y2="500" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- create sequence -->
-          <rect x="88" y="500" width="418" height="44" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
-          <text x="297" y="516" text-anchor="middle" fill="#4a1a6e" font-size="11" font-weight="700">TEST creates SEQUENCE</text>
-          <text x="297" y="530" text-anchor="middle" fill="#4a1a6e" font-size="10">seq = my_seq::type_id::create("seq")   — factory, type sub possible</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="544" x2="297" y2="564" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- seq.start -->
-          <rect x="88" y="564" width="418" height="44" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
-          <text x="297" y="580" text-anchor="middle" fill="#4a1a6e" font-size="11" font-weight="700">seq.start( sqr )</text>
-          <text x="297" y="594" text-anchor="middle" fill="#4a1a6e" font-size="10">Sequence started on sequencer — blocking call</text>
-          <text x="297" y="606" text-anchor="middle" fill="#4a1a6e" font-size="9">Does not return until entire body() completes</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="608" x2="297" y2="628" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- SEQUENCE body -->
-          <rect x="88" y="628" width="418" height="36" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-          <text x="297" y="644" text-anchor="middle" fill="#14532d" font-size="11" font-weight="700">SEQUENCE body() executes</text>
-          <text x="297" y="658" text-anchor="middle" fill="#14532d" font-size="10">Generates transaction items one by one in a loop</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="664" x2="297" y2="684" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- start_item -->
-          <rect x="88" y="684" width="418" height="44" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-          <text x="297" y="700" text-anchor="middle" fill="#14532d" font-size="11" font-weight="700">① start_item( pkt )</text>
-          <text x="297" y="714" text-anchor="middle" fill="#14532d" font-size="10">Sequence requests slot from sequencer</text>
-          <text x="297" y="726" text-anchor="middle" fill="#14532d" font-size="9">BLOCKS until sequencer arbitration grants access</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="728" x2="297" y2="748" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- pkt.randomize -->
-          <rect x="88" y="748" width="418" height="44" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
-          <text x="297" y="764" text-anchor="middle" fill="#4a1a6e" font-size="11" font-weight="700">② pkt.randomize()</text>
-          <text x="297" y="778" text-anchor="middle" fill="#4a1a6e" font-size="10">Randomization called between start_item and finish_item</text>
-          <text x="297" y="790" text-anchor="middle" fill="#4a1a6e" font-size="9">Constraints applied here to generate stimulus values</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="792" x2="297" y2="812" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- finish_item -->
-          <rect x="88" y="812" width="418" height="44" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-          <text x="297" y="828" text-anchor="middle" fill="#14532d" font-size="11" font-weight="700">③ finish_item( pkt )</text>
-          <text x="297" y="842" text-anchor="middle" fill="#14532d" font-size="10">Item handed to sequencer → placed on TLM channel</text>
-          <text x="297" y="854" text-anchor="middle" fill="#14532d" font-size="9">Sequence BLOCKS here until driver calls item_done()</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="856" x2="297" y2="876" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- get_next_item -->
-          <rect x="88" y="876" width="418" height="44" rx="8" fill="#d5e8d4" stroke="#009900" stroke-width="1.5"/>
-          <text x="297" y="892" text-anchor="middle" fill="#14532d" font-size="11" font-weight="700">④ DRIVER : get_next_item( tx )</text>
-          <text x="297" y="906" text-anchor="middle" fill="#14532d" font-size="10">Blocking call — waits until an item is available</text>
-          <text x="297" y="918" text-anchor="middle" fill="#14532d" font-size="9">from the sequencer on the TLM port</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="920" x2="297" y2="940" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- drive_item -->
-          <rect x="88" y="940" width="418" height="52" rx="8" fill="#d5e8d4" stroke="#009900" stroke-width="1.5"/>
-          <text x="297" y="956" text-anchor="middle" fill="#14532d" font-size="11" font-weight="700">⑤ drive_item( tx )  [user-defined]</text>
-          <text x="297" y="970" text-anchor="middle" fill="#14532d" font-size="10">Drives transaction fields onto virtual interface signals</text>
-          <text x="297" y="984" text-anchor="middle" fill="#14532d" font-size="9">e.g.  vif.addr &lt;= tx.addr  |  vif.data &lt;= tx.data</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="992" x2="297" y2="1012" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- item_done -->
-          <rect x="88" y="1012" width="418" height="44" rx="8" fill="#d5e8d4" stroke="#009900" stroke-width="1.5"/>
-          <text x="297" y="1028" text-anchor="middle" fill="#14532d" font-size="11" font-weight="700">⑥ item_done()</text>
-          <text x="297" y="1042" text-anchor="middle" fill="#14532d" font-size="10">Handshake complete — sequencer is notified</text>
-          <text x="297" y="1054" text-anchor="middle" fill="#14532d" font-size="9">finish_item() in sequence unblocks → next item can be sent</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="1056" x2="297" y2="1076" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- loop box -->
-          <rect x="88" y="1076" width="418" height="44" rx="8" fill="#f9dbc8" stroke="#d6552b" stroke-width="2" stroke-dasharray="6,3"/>
-          <text x="297" y="1092" text-anchor="middle" fill="#7c2d12" font-size="11" font-weight="700">Driver loops forever</text>
-          <text x="297" y="1106" text-anchor="middle" fill="#7c2d12" font-size="10">get_next_item → drive_item → item_done</text>
-          <text x="297" y="1118" text-anchor="middle" fill="#7c2d12" font-size="9">Sequence loops per item in body() until all items driven</text>
-
-          <!-- loop back arrow -->
-          <path d="M 506 1098 L 560 1098 L 560 706 L 506 706" fill="none" stroke="#d6552b" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-loop)"/>
-          <text x="565" y="905" text-anchor="start" fill="#d6552b" font-size="9" transform="rotate(-90,565,905)">repeat for each item</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="1120" x2="297" y2="1140" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- seq.start returns -->
-          <rect x="88" y="1140" width="418" height="36" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
-          <text x="297" y="1156" text-anchor="middle" fill="#4a1a6e" font-size="11" font-weight="700">seq.start() returns</text>
-          <text x="297" y="1170" text-anchor="middle" fill="#4a1a6e" font-size="10">All items driven — body() completed</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="1176" x2="297" y2="1196" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- drop_objection -->
-          <rect x="88" y="1196" width="418" height="36" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
-          <text x="297" y="1212" text-anchor="middle" fill="#78350f" font-size="11" font-weight="700">TEST : phase.drop_objection(this)</text>
-          <text x="297" y="1226" text-anchor="middle" fill="#78350f" font-size="10">Signals that run_phase may now end</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="1232" x2="297" y2="1252" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- extract / check -->
-          <rect x="0" y="1252" width="142" height="30" fill="#6d4c00" stroke="#4a3300" stroke-width="1.5"/>
-          <text x="71" y="1264" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">extract / check</text>
-          <text x="71" y="1277" text-anchor="middle" fill="#fef3c7" font-size="9">function · Bottom-Up</text>
-          <rect x="142" y="1252" width="448" height="30" fill="#fff8e1" stroke="#6d4c00" stroke-width="1.5"/>
-          <text x="366" y="1270" text-anchor="middle" fill="#451a03" font-size="9">Scoreboard comparisons, functional coverage checks, error detection.</text>
-
-          <!-- report / final -->
-          <rect x="0" y="1282" width="142" height="30" fill="#006EAF" stroke="#005885" stroke-width="1.5"/>
-          <text x="71" y="1294" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">report / final</text>
-          <text x="71" y="1307" text-anchor="middle" fill="#bfdbfe" font-size="9">function · Bottom-Up</text>
-          <rect x="142" y="1282" width="448" height="30" fill="#dae8fc" stroke="#006EAF" stroke-width="1.5"/>
-          <text x="366" y="1294" text-anchor="middle" fill="#1e3a5f" font-size="9">UVM report summary (INFO / WARNING / ERROR / FATAL counts) printed.</text>
-          <text x="366" y="1306" text-anchor="middle" fill="#1e3a5f" font-size="9">Then $finish called by uvm_root.</text>
-
-          <!-- arrow -->
-          <line x1="297" y1="1312" x2="297" y2="1332" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-
-          <!-- $finish -->
-          <rect x="120" y="1332" width="354" height="36" rx="18" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
-          <text x="297" y="1352" text-anchor="middle" fill="#1e3a5f" font-size="12" font-weight="700">$finish — Simulation Ends</text>
-        </svg>
+      <!-- 1: Entry -->
+      <div class="rt-node entry">
+        <div class="rt-label" style="color:#1e3a5f">Entry Point</div>
+        <span class="nk">initial</span> <span class="nk">begin</span><br>
+        &nbsp;&nbsp;<span class="nm">run_test</span>(); <span style="color:#64748b">// NO argument</span><br>
+        <span class="nk">end</span>
       </div>
-    </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
 
-    <!-- Text breakdown cards -->
-    <div class="card">
-      <h2>🚀 Top Module &amp; run_test()</h2>
-      <p>Everything begins in the top module. The top module instantiates the DUT and the Interface that connects to the DUT. It then calls <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">run_test()</code> inside an <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">initial begin...end</code> block. The test name is passed via the command line using <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">+UVM_TESTNAME=&lt;testname&gt;</code> — never hardcoded — so the top module never needs to be modified to run a different test.</p>
-    </div>
-
-    <div class="card">
-      <h2>🏭 Factory Resolves the Test Type</h2>
-      <p>When <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">run_test()</code> is called, <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">uvm_root</code> asks the UVM factory to find and create the requested test. The factory works because every class that used <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">`uvm_component_utils(T)</code> or <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">`uvm_object_utils(T)</code> was automatically registered at compile time.</p>
-      <p>The macro internally defines a <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">type_id</code> typedef and a static local handle whose initialization calls <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">get()</code>, registering the type. So by simulation start the factory already has a full lookup table of all registered types. If a type override was registered (e.g. <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">set_type_override_by_type()</code>), the factory returns the overriding type without touching any other component's source code.</p>
-    </div>
-
-    <div class="card-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.2rem;">
-      <div class="card" style="margin-bottom:0">
-        <h3>🔽 build_phase — Top-Down</h3>
-        <p>The test creates the environment using <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">env::type_id::create()</code>. The environment creates agents, each agent creates its own sequencer and driver. The agent retrieves the virtual interface from <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">uvm_config_db</code>. <strong style="color:var(--accent5)">Critical:</strong> always use <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">::type_id::create()</code>, never <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">new()</code> directly — using <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">new()</code> hardcodes the type and completely bypasses the factory.</p>
+      <!-- 2: Global Task -->
+      <div class="rt-node global">
+        <div class="rt-label" style="color:#7a4000">uvm_globals.svh — global run_test("")</div>
+        <span class="nk">task</span> <span class="nm">run_test</span>(<span class="nk">string</span> test_name=<span class="ns">""</span>);<br>
+        &nbsp;&nbsp;<span class="nc">uvm_coreservice_t</span> cs;<br>
+        &nbsp;&nbsp;<span class="nc">uvm_root</span> top;<br>
+        &nbsp;&nbsp;cs = <span class="nc">uvm_coreservice_t</span>::<span class="nm">get</span>();<br>
+        &nbsp;&nbsp;top = cs.<span class="nm">get_root</span>();<br>
+        &nbsp;&nbsp;top.<span class="nm">run_test</span>(test_name); <span style="color:#64748b">// passes ""</span><br>
+        <span class="nk">endtask</span>
       </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>🔼 connect_phase — Bottom-Up</h3>
-        <p>After the entire hierarchy is built, connections are made. The most important connection is inside the agent: <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">drv.seq_item_port.connect(sqr.seq_item_export)</code>. This creates the TLM channel between the sequencer and the driver. The sequencer holds sequence items, and the driver pulls them through this TLM port.</p>
-      </div>
-    </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
 
-    <div class="card">
-      <h2>⚡ run_phase — Parallel Execution</h2>
-      <p>All <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">run_phase</code> tasks across all components execute in parallel as separate threads. The sequence–driver handshake proceeds as follows:</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.8rem;margin-top:0.8rem;">
-        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;">
-          <div style="color:#f59e0b;font-weight:700;font-size:0.85rem;margin-bottom:0.4rem;">① TEST</div>
-          <p style="font-size:0.85rem;margin:0"><code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">phase.raise_objection(this)</code> — tells UVM not to end the phase yet. Without this, run_phase ends immediately.</p>
-        </div>
-        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;">
-          <div style="color:#8b5cf6;font-weight:700;font-size:0.85rem;margin-bottom:0.4rem;">② SEQUENCE</div>
-          <p style="font-size:0.85rem;margin:0">Created via factory, started with <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">seq.start(sqr)</code> — a blocking call that returns only after the entire <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">body()</code> completes.</p>
-        </div>
-        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;">
-          <div style="color:#10b981;font-weight:700;font-size:0.85rem;margin-bottom:0.4rem;">③ start_item / finish_item</div>
-          <p style="font-size:0.85rem;margin:0"><code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">start_item(pkt)</code> blocks until sequencer grants access. Then <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">pkt.randomize()</code> runs, then <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">finish_item(pkt)</code> sends and blocks until driver signals done.</p>
-        </div>
-        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;">
-          <div style="color:#10b981;font-weight:700;font-size:0.85rem;margin-bottom:0.4rem;">④ DRIVER forever loop</div>
-          <p style="font-size:0.85rem;margin:0"><code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">get_next_item(tx)</code> → drives signals → <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">item_done()</code>. The <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">item_done()</code> unblocks <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">finish_item()</code> in the sequence, allowing the next item to be generated.</p>
+      <!-- 3: Singleton Check -->
+      <div class="rt-node singleton">
+        <div class="rt-label" style="color:#5a2800">uvm_coreservice_t::get() called</div>
+        <span class="nk">static function</span> <span class="nc">uvm_coreservice_t</span> <span class="nm">get</span>();<br>
+        &nbsp;&nbsp;<span class="nk">if</span> (inst == <span class="nk">null</span>) <span style="color:#64748b">// still null → FIRES</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nm">uvm_init</span>(<span class="nk">null</span>);<br>
+        &nbsp;&nbsp;<span class="nk">return</span> inst;<br>
+        <span class="nk">endfunction</span>
+      </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- 4: Bootstrap -->
+      <div class="rt-node bootstrap">
+        <div class="rt-label" style="color:#4a3800">uvm_init(null) → uvm_root.svh</div>
+        <span class="nk">function void</span> <span class="nm">uvm_init</span>(<span class="nc">uvm_coreservice_t</span> cs=<span class="nk">null</span>);<br>
+        &nbsp;&nbsp;<span class="nk">if</span> (cs == <span class="nk">null</span>) <span class="nk">begin</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nc">uvm_default_coreservice_t</span> dcs = <span class="nk">new</span>(); <span style="color:#64748b">◄ BORN</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;cs = dcs;<br>
+        &nbsp;&nbsp;<span class="nk">end</span><br>
+        &nbsp;&nbsp;<span class="nc">uvm_coreservice_t</span>::<span class="nm">set</span>(cs); <span style="color:#64748b">◄ inst = cs</span><br>
+        <span class="nk">endfunction</span><br>
+        <span style="color:#64748b">// inst is NOW: 0xABCD (address of dcs object)</span>
+      </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- 5: Object created -->
+      <div class="rt-node object">
+        <div class="rt-label" style="color:#1b5e20">uvm_default_coreservice_t object in heap</div>
+        factory = <span class="nk">null</span> (lazy)<br>
+        report_server = <span class="nk">null</span> (lazy)<br>
+        tr_database = <span class="nk">null</span> (lazy)<br>
+        m_rp = <span class="nk">null</span> (lazy — resource pool)<br>
+        m_hopper = <span class="nk">null</span> (lazy — phase scheduler)<br>
+        m_uvm_global_seed = $urandom → <span style="color:#4caf50">SET NOW</span><br>
+        m_default_max_ready_to_end = <span class="nd">20</span><br><br>
+        <span style="color:#64748b">inst now points here. Singleton locked.</span>
+      </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- 6: cs.get_root() -->
+      <div class="rt-node fetch">
+        <div class="rt-label" style="color:#1a237e">cs.get_root() called</div>
+        <span class="nk">virtual function</span> <span class="nc">uvm_root</span> <span class="nm">get_root</span>();<br>
+        &nbsp;&nbsp;<span class="nk">return</span> <span class="nc">uvm_root</span>::<span class="nm">m_uvm_get_root</span>();<br>
+        <span class="nk">endfunction</span><br>
+        <span style="color:#64748b">Delegates to uvm_root's singleton getter.</span>
+      </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- 7: Root singleton constructor -->
+      <div class="rt-node root-sing">
+        <div class="rt-label" style="color:#004d5e">uvm_root::m_uvm_get_root()</div>
+        <span class="nk">if</span> (m_inst == <span class="nk">null</span>) → <span style="color:#26c6da">TRUE</span><br>
+        &nbsp;&nbsp;m_inst = <span class="nk">new</span>(); <span style="color:#64748b">◄ uvm_root BORN</span><br>
+        &nbsp;&nbsp;<span class="nc">uvm_domain</span>::<span class="nm">get_common_domain</span>(); <span style="color:#64748b">◄ phase DAG built</span><br>
+        &nbsp;&nbsp;m_inst.m_domain = <span class="nc">uvm_domain</span>::<span class="nm">get_uvm_domain</span>();<br>
+        &nbsp;&nbsp;<span class="nk">return</span> m_inst;
+      </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- 8: Root object state -->
+      <div class="rt-node root-state">
+        <div class="rt-label" style="color:#4a0060">uvm_root object in heap</div>
+        name = <span class="ns">""</span> ← empty, invisible in hierarchy<br>
+        m_parent = <span class="nk">null</span> ← no parent, true root<br>
+        m_children = {} ← empty, filled in build_phase<br>
+        m_domain ← uvm_domain("uvm")<br>
+        enable_print_topology = <span class="nd">0</span><br>
+        finish_on_completion = <span style="color:#ab47bc">TRUE</span> ← <span class="nm">$finish</span> auto-called<br><br>
+        <span style="color:#64748b">Phase DAG also now exists:<br>
+        build→connect→eoe→run→extract→check→report→final<br>
+        m_inst now points here.</span>
+      </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- 9: test name resolution -->
+      <div class="rt-node test-name">
+        <div class="rt-label" style="color:#4a3000">top.run_test("") — uvm_root::run_test</div>
+        test_name = <span class="ns">""</span> ← blank string passed in<br><br>
+        Now checks command line:<br>
+        clp.<span class="nm">get_arg_values</span>(<span class="ns">"+UVM_TESTNAME="</span>, test_names);<br>
+        test_name_count = …<br><br>
+        <span style="color:#b8a020">Two sub-paths fork from here →</span>
+      </div>
+      <div class="rt-arrow short"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- 10: Decision diamond -->
+      <div class="rt-diamond-wrap">
+        <div class="rt-diamond">
+          <span>+UVM_TESTNAME=?<br>found on cmdline?</span>
         </div>
       </div>
-      <p style="margin-top:0.8rem">After <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">seq.start()</code> returns, the test calls <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">phase.drop_objection(this)</code>. When all raised objections are dropped across all components, the run_phase ends.</p>
+
+      <!-- 11: Two branches -->
+      <div class="rt-branches">
+
+        <!-- YES branch -->
+        <div class="rt-branch">
+          <div class="rt-branch-label yes">YES — found on cmdline</div>
+          <div class="rt-arrow short"><div class="rt-line"></div><div class="rt-tip"></div></div>
+          <div class="rt-node object" style="background:#e8f5e9;border-color:#388e3c">
+            <div class="rt-label" style="color:#1b5e20">Normal Flow</div>
+            test_name = test_names[0]<br>
+            parent = <span class="nk">null</span> ← true root<br>
+            passed = <span class="nk">true</span> ← singleton<br><br>
+            UVM factory looks up<br>
+            test_name → creates<br>
+            instance of that class<br>
+            as <span class="nc">uvm_root_top</span>.<br><br>
+            <span style="color:#64748b">All phases run with<br>your test class.<br>This is the expected<br>happy path.</span>
+          </div>
+          <div class="rt-arrow short"><div class="rt-line"></div><div class="rt-tip"></div></div>
+          <div style="background:#e8f5e9;border:1.5px solid #4caf50;border-radius:6px;padding:0.5rem 0.75rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#1b5e20;text-align:center">
+            build/connect/run/check<br>all fire normally
+          </div>
+        </div>
+
+        <!-- NO branch -->
+        <div class="rt-branch">
+          <div class="rt-branch-label no">NO — not found</div>
+          <div class="rt-arrow short"><div class="rt-line"></div><div class="rt-tip"></div></div>
+          <div class="rt-node singleton" style="background:#fff3e0;border-color:#ff9800">
+            <div class="rt-label" style="color:#e65100">Silent No-op</div>
+            test_name still <span class="ns">""</span><br><br>
+            Factory create skipped<br>→ <span class="nc">uvm_test_top</span> created<br>
+            <span style="color:#64748b">(same as Path B)</span><br><br>
+            Phases still run but<br>with only uvm_root<br>as component.<br><br>
+            build/connect/run<br>all fire. Nothing<br>useful happens.<br>Simulation ends quickly.
+          </div>
+          <div class="rt-arrow short"><div class="rt-line"></div><div class="rt-tip"></div></div>
+          <div style="background:#ffebee;border:1.5px solid #ef5350;border-radius:6px;padding:0.5rem 0.75rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#c62828;text-align:center">
+            No stimulus, no checking.<br>Sim ends quietly.<br>(forgot +UVM_TESTNAME)
+          </div>
+        </div>
+
+      </div><!-- /branches -->
+
+      <!-- merge arrow -->
+      <div class="rt-arrow tall"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- cleanup phases -->
+      <div class="rt-node" style="background:#e3f2fd;border-color:#1565c0;color:#0d2a6e">
+        <div class="rt-label" style="color:#0d2a6e">Cleanup Phases (all Bottom-Up)</div>
+        <span style="color:#1565c0;font-weight:700">extract_phase</span> → collect remaining data from monitors/FIFOs<br>
+        <span style="color:#1565c0;font-weight:700">check_phase</span>&nbsp;&nbsp;&nbsp;→ scoreboard compare, issue errors, pass/fail<br>
+        <span style="color:#1565c0;font-weight:700">report_phase</span>&nbsp;&nbsp;→ UVM prints INFO/WARNING/ERROR/FATAL summary<br>
+        <span style="color:#1565c0;font-weight:700">final_phase</span>&nbsp;&nbsp;&nbsp;→ close files, last cleanup; rarely overridden
+      </div>
+      <div class="rt-arrow"><div class="rt-line"></div><div class="rt-tip"></div></div>
+
+      <!-- finish -->
+      <div class="rt-node finish">
+        $finish — Simulation Ends<br>
+        <span style="font-size:0.7rem;font-weight:400;color:#4a6a9e">(called by uvm_root because finish_on_completion=TRUE)</span>
+      </div>
+
+    </div><!-- /rt-flow -->
+
+    <!-- ── RIGHT: Annotations ── -->
+    <div class="rt-annots">
+
+      <div class="rt-ann">
+        <div class="ann-title">① Entry Point</div>
+        The testbench calls <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">run_test()</code> with NO argument inside an <em>initial begin/end</em> block. This is the very first line of user code that kicks off the entire simulation. No test name is given here — it relies on the command line or defaults later.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">② Global Task</div>
+        UVM's global <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">run_test()</code> task is in <em>uvm_globals.svh</em>. It gets the singleton coreservice (cs), then fetches the UVM root (top), and finally calls <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">top.run_test()</code> — passing an empty string because no test name was provided by the user.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">③ Singleton Check</div>
+        This static function checks if the UVM coreservice singleton has been initialized yet. Since the very first call ever, inst is still null, so it fires <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">uvm_init(null)</code> to bootstrap the entire UVM infrastructure before returning the instance.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">④ UVM Bootstrap</div>
+        Called with null, it creates a brand-new <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">uvm_default_coreservice_t</code> object on the heap. This object becomes the global service locator for the whole simulation. It is then registered via <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">set(cs)</code> so future <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">get()</code> calls return it directly — no re-creation.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">⑤ Object Created</div>
+        The newly born coreservice object has most fields set to null — they use lazy init (created only when needed). Two fields ARE set immediately: the random global seed (captured now for reproducibility) and the ready-to-end counter. The singleton is now locked.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">⑥ Fetch UVM Root</div>
+        The coreservice is asked for the top-level UVM component via <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">get_root()</code>. It simply delegates to <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">uvm_root::m_uvm_get_root()</code> — a thin wrapper that keeps the root creation logic inside <em>uvm_root</em> itself, where it belongs.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">⑦ Root Singleton Constructor</div>
+        <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">m_inst</code> is null on first call, so a new uvm_root object is born. Immediately after, the full UVM <strong style="color:var(--text)">phase schedule</strong> is constructed by calling <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">get_common_domain()</code>. The root's domain is also set. From this point on, phase scheduling is ready.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">⑧ Root Object State</div>
+        The uvm_root object has an empty name (invisible in hierarchy), no parent, and no children yet (filled during build_phase). <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">finish_on_completion=TRUE</code> means <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">$finish</code> is called automatically when all phases end. The full phase pipeline from build→final is now in memory.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">⑨ Test Name Resolution</div>
+        Inside <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">uvm_root::run_test()</code> with an empty string, it scans the simulator command line for <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">+UVM_TESTNAME</code>. The result of this lookup determines which of the two paths below is taken — this is the fork visible in the flowchart.
+      </div>
+
+      <div class="rt-ann">
+        <div class="ann-title">⑩ Decision Point</div>
+        Was <code style="color:var(--accent);font-family:'JetBrains Mono',monospace">+UVM_TESTNAME=my_test</code> passed on the simulator command line? This is the branch that decides whether a real test component is created or the simulation runs with only <em>uvm_root</em> as the sole component.
+      </div>
+
+    </div><!-- /rt-annots -->
+    </div><!-- /rt-wrap -->
+
+    <!-- ── Detail cards ── -->
+    <div class="detail-grid">
+      <div class="detail-card">
+        <h3>🏭 Factory Inside run_test()</h3>
+        <p>When a test name is resolved, <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">uvm_factory.create_component_by_name()</code> is called. Every class registered with <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">`uvm_component_utils</code> is in the factory lookup table at this point. If a type override was registered, the factory silently substitutes the override — no source changes needed.</p>
+      </div>
+      <div class="detail-card">
+        <h3>📅 Phase DAG at this point</h3>
+        <p><code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">get_common_domain()</code> builds the full phase schedule as a directed acyclic graph: <strong style="color:var(--text)">build → connect → eoe → sos → run → extract → check → report → final</strong>. Run sub-phases (reset, configure, main…) are also scheduled inside the run node. This DAG drives all subsequent phase execution.</p>
+      </div>
+      <div class="detail-card">
+        <h3>⚡ run_phase Parallel Threads</h3>
+        <p>Every component's <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">run_phase</code> task is forked into its own thread simultaneously. The test calls <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">phase.raise_objection(this)</code>, starts sequences, then <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">phase.drop_objection(this)</code>. When the last objection drops across all components, the phase ends and UVM advances to extract_phase.</p>
+      </div>
+      <div class="detail-card">
+        <h3>🔇 The Silent No-op Path</h3>
+        <p>If no <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">+UVM_TESTNAME</code> is found, no test component is created. UVM still runs all phases with only <em>uvm_root</em> as a participant. Since no test raises an objection in run_phase, it ends immediately. The simulation completes in near-zero time — the classic symptom of a forgotten <code style="background:rgba(0,212,255,0.1);padding:1px 4px;border-radius:3px;color:var(--accent)">+UVM_TESTNAME</code> plusarg.</p>
+      </div>
     </div>
-
-    <div class="card">
-      <h2>🧹 Cleanup Phases</h2>
-      <p>After <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">run_phase</code> ends, UVM automatically proceeds through: <strong style="color:var(--text)">extract_phase</strong> (collect data from DUT or monitors), <strong style="color:var(--text)">check_phase</strong> (scoreboard comparisons, error checking), <strong style="color:var(--text)">report_phase</strong> (UVM prints full report summary — info/warning/error/fatal counts per ID), and finally <strong style="color:var(--text)">final_phase</strong> (last cleanup before <code style="background:rgba(0,212,255,0.1);padding:1px 5px;border-radius:3px;color:var(--accent)">$finish</code> is called by uvm_root).</p>
-    </div>
-
-
 
   </div>
 </div>
 <!-- ── end sec-runtest ─────────────────────────────────────────────── -->
+
+<!-- ── RAL MODEL SECTION ─────────────────────────────────────────── -->
+<div id="sec-ral" class="section">
+
+  <div class="ral-hero">
+    <h2>📋 UVM RAL Model</h2>
+    <p>The <strong style="color:#f59e0b">Register Abstraction Layer (RAL)</strong> is a high-level, object-oriented abstraction for accessing and verifying design registers and memories. RAL mimics the design register space, keeps predicted values in sync, and provides a bus-agnostic API that works at both block and system level — making register verification automated, scalable, and reusable.</p>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="rtab-bar" id="ral-tabs">
+    <button class="rtab-btn active" onclick="showRalTab('ral-overview')">Overview</button>
+    <button class="rtab-btn" onclick="showRalTab('ral-adapter')">Adapter &amp; Map</button>
+    <button class="rtab-btn" onclick="showRalTab('ral-mem')">uvm_mem</button>
+    <button class="rtab-btn" onclick="showRalTab('ral-predict')">Predictor</button>
+    <button class="rtab-btn" onclick="showRalTab('ral-cov')">Coverage</button>
+    <button class="rtab-btn" onclick="showRalTab('ral-seq')">Built-in Seqs</button>
+  </div>
+
+  <!-- ── TAB: OVERVIEW ── -->
+  <div id="ral-overview" class="rtab-content active">
+
+    <div class="rcard">
+      <div class="rcard-title">Why RAL?</div>
+      <p>Register verification without RAL requires manually tracking every register's attributes, reset values, and field coverage ranges — error-prone and slow. RAL automates this with a structured model that mirrors the design, ready-made APIs, and built-in self-checking.</p>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="ficon">🔀</div>
+          <div class="ftitle">Multi-access types</div>
+          <div class="fdesc">Supports R/W, RO, WO, W1C and other field access policies, just like the RTL.</div>
+        </div>
+        <div class="feat-card">
+          <div class="ficon">🚪</div>
+          <div class="ftitle">Front &amp; backdoor</div>
+          <div class="fdesc">Frontdoor goes through the bus protocol; backdoor uses HDL paths for zero-time direct access.</div>
+        </div>
+        <div class="feat-card">
+          <div class="ficon">🚌</div>
+          <div class="ftitle">Multi-bus</div>
+          <div class="fdesc">Same RAL model can be accessed by multiple buses (APB, AXI, etc.) simultaneously.</div>
+        </div>
+        <div class="feat-card">
+          <div class="ficon">📐</div>
+          <div class="ftitle">Block ↔ System</div>
+          <div class="fdesc">Abstraction allows seamless reuse from block-level testbenches to system-level integration.</div>
+        </div>
+        <div class="feat-card">
+          <div class="ficon">📊</div>
+          <div class="ftitle">Coverage hooks</div>
+          <div class="fdesc">Built-in <span class="chip">sample()</span> override point to connect user-defined covergroups.</div>
+        </div>
+        <div class="feat-card">
+          <div class="ficon">✅</div>
+          <div class="ftitle">Self-check</div>
+          <div class="fdesc">Predicted value tracks every write/read; built-in comparison detects mismatches.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">RAL Hierarchy</div>
+      <p>Three levels mirror the design register structure:</p>
+      <div class="hier-ladder">
+        <div class="hier-row">
+          <div class="hier-connector"><div class="hier-dot"></div><div class="hier-line"></div></div>
+          <div class="hier-body">
+            <div class="hier-cls">uvm_reg_block <span class="tag tag-top" style="font-size:0.6rem">TOPMOST</span></div>
+            <div class="hier-desc">Top of the RAL hierarchy. Contains all register (<code style="font-family:'JetBrains Mono',monospace;font-size:0.8em;color:var(--accent)">uvm_reg</code>) instances and/or nested sub-blocks. Also holds the register map(s).</div>
+          </div>
+        </div>
+        <div class="hier-row">
+          <div class="hier-connector"><div class="hier-dot"></div><div class="hier-line"></div></div>
+          <div class="hier-body">
+            <div class="hier-cls">uvm_reg</div>
+            <div class="hier-desc">Mimics a single hardware register. Tracks the mirror/predicted value and current (actual) value. Contains one or more <code style="font-family:'JetBrains Mono',monospace;font-size:0.8em;color:var(--accent)">uvm_reg_field</code> instances.</div>
+          </div>
+        </div>
+        <div class="hier-row">
+          <div class="hier-connector"><div class="hier-dot"></div><div class="hier-line"></div></div>
+          <div class="hier-body">
+            <div class="hier-cls">uvm_reg_field</div>
+            <div class="hier-desc">Represents a named bit-field within a register. Has its own access policy (RW, RO, W1C…), reset value, and coverage.</div>
+          </div>
+        </div>
+      </div>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_1.gif" alt="RAL hierarchy diagram">
+        <div class="fig-cap">Figure 1 — RAL class hierarchy</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">RAL in the UVM Phase Flow</div>
+      <p>RAL integrates naturally into the standard UVM phases:</p>
+      <div style="display:flex;flex-direction:column;gap:3px;margin:0.8rem 0;">
+        <div class="flow-item" style="background:rgba(59,130,246,0.07);border-color:rgba(59,130,246,0.2)">
+          <span class="flow-icon">🔨</span>
+          <span style="color:#60a5fa;font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:700;min-width:160px">build_phase</span>
+          <span style="font-size:0.82rem;color:var(--text2)">Instantiate RAL model (<span style="font-family:'JetBrains Mono',monospace;color:var(--accent)">new()</span>), create adapter, create predictor</span>
+        </div>
+        <div style="color:var(--text3);text-align:center;font-size:0.9rem">↓</div>
+        <div class="flow-item" style="background:rgba(139,92,246,0.07);border-color:rgba(139,92,246,0.2)">
+          <span class="flow-icon">🔌</span>
+          <span style="color:#a78bfa;font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:700;min-width:160px">connect_phase</span>
+          <span style="font-size:0.82rem;color:var(--text2)">Call <span style="font-family:'JetBrains Mono',monospace;color:var(--accent)">map.set_sequencer(sqr, adapter)</span>, connect predictor to monitor</span>
+        </div>
+        <div style="color:var(--text3);text-align:center;font-size:0.9rem">↓</div>
+        <div class="flow-item" style="background:rgba(16,185,129,0.07);border-color:rgba(16,185,129,0.2)">
+          <span class="flow-icon">▶</span>
+          <span style="color:#34d399;font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:700;min-width:160px">run_phase</span>
+          <span style="font-size:0.82rem;color:var(--text2)">Run RAL sequences (<span style="font-family:'JetBrains Mono',monospace;color:var(--accent)">reg.write()</span>, <span style="font-family:'JetBrains Mono',monospace;color:var(--accent)">reg.read()</span>, pre-defined seqs)</span>
+        </div>
+        <div style="color:var(--text3);text-align:center;font-size:0.9rem">↓</div>
+        <div class="flow-item" style="background:rgba(245,158,11,0.07);border-color:rgba(245,158,11,0.2)">
+          <span class="flow-icon">🔍</span>
+          <span style="color:#fbbf24;font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:700;min-width:160px">check_phase</span>
+          <span style="font-size:0.82rem;color:var(--text2)">Compare mirror vs actual via <span style="font-family:'JetBrains Mono',monospace;color:var(--accent)">reg.mirror()</span> or scoreboard</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /ral-overview -->
+
+  <!-- ── TAB: ADAPTER & MAP ── -->
+  <div id="ral-adapter" class="rtab-content">
+
+    <div class="rcard">
+      <div class="rcard-title">The Adapter Class</div>
+      <p>The adapter bridges the bus protocol and the RAL model. It must extend <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_reg_adapter</code> and implement two functions:</p>
+      <div class="adapt-flow">
+        <div class="abox hl1">uvm_sequence_item<br><span style="font-size:0.7rem;color:var(--text3)">(bus transaction)</span></div>
+        <div class="aarr">⇄</div>
+        <div class="abox hl3">uvm_reg_bus_op<br><span style="font-size:0.7rem;color:var(--text3)">(RAL operation)</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-top:0.5rem;">
+        <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.25);border-radius:8px;padding:0.9rem">
+          <div style="color:#fbbf24;font-weight:700;font-size:0.82rem;margin-bottom:0.3rem">reg2bus()</div>
+          <div style="font-size:0.8rem;color:var(--text2)">Called for every frontdoor write/read. Translates the RAL <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_reg_bus_op</code> into a bus-protocol sequence item (e.g. APB or AXI).</div>
+        </div>
+        <div style="background:rgba(52,211,153,0.07);border:1px solid rgba(52,211,153,0.25);border-radius:8px;padding:0.9rem">
+          <div style="color:#34d399;font-weight:700;font-size:0.82rem;margin-bottom:0.3rem">bus2reg()</div>
+          <div style="font-size:0.8rem;color:var(--text2)">Called after the bus transaction completes. Converts the completed bus item back into a <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_reg_bus_op</code> so RAL can update its mirror.</div>
+        </div>
+      </div>
+      <div class="fig" style="margin-top:1rem">
+        <img src="https://static.designandreuse.com/news_img19/20190902_2.gif" alt="Adapter class implementation">
+        <div class="fig-cap">Adapter class — reg2bus() and bus2reg() skeleton</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">Multiple Buses — One RAL Model</div>
+      <p>For designs accessible via multiple buses (e.g. APB + AXI), create a separate adapter for each bus. Then call <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">map.set_sequencer()</code> for each register map:</p>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_3.gif" alt="Multi-bus register map assignment">
+        <div class="fig-cap">Setting sequencer per register map for APB and AXI</div>
+      </div>
+      <div class="info-box tip">
+        <strong>Tip</strong>
+        Each <code style="font-family:'JetBrains Mono',monospace">uvm_reg_map</code> can have its own sequencer and adapter. To drive a register access over a specific bus, pass the corresponding map handle to <code style="font-family:'JetBrains Mono',monospace">reg.write(status, value, .map(apb_map))</code>.
+      </div>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_4.gif" alt="Per-map register access example">
+        <div class="fig-cap">Targeting a specific register map for frontdoor access</div>
+      </div>
+    </div>
+
+  </div><!-- /ral-adapter -->
+
+  <!-- ── TAB: UVM_MEM ── -->
+  <div id="ral-mem" class="rtab-content">
+
+    <div class="rcard">
+      <div class="rcard-title">uvm_mem — Memory inside RAL</div>
+      <p><code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_mem</code> mirrors design memory inside the RAL model. Like <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_reg</code> it supports frontdoor and backdoor access, and adds burst read/write capability.</p>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_5.gif" alt="uvm_mem declaration">
+        <div class="fig-cap">Memory declaration inside the RAL model</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">Burst Read / Write</div>
+      <p>A key advantage of <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_mem</code> over plain registers — burst operations let you write/read a contiguous range of memory locations in a single API call:</p>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_6.jpg" alt="Burst read/write example">
+        <div class="fig-cap">uvm_mem burst write / burst read usage</div>
+      </div>
+      <div class="info-box warn">
+        <strong>Limitation</strong>
+        <code style="font-family:'JetBrains Mono',monospace">uvm_mem</code> does <em>not</em> maintain an internal mirror of expected data. Unlike <code style="font-family:'JetBrains Mono',monospace">uvm_reg</code>, it has <strong>no built-in data comparison</strong> — the scoreboard must handle memory read-back checking manually.
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">uvm_reg vs uvm_mem — Quick Comparison</div>
+      <table class="seq-table">
+        <thead><tr><th>Feature</th><th>uvm_reg</th><th>uvm_mem</th></tr></thead>
+        <tbody>
+          <tr><td>Frontdoor access</td><td style="color:#4ade80">✔</td><td style="color:#4ade80">✔</td></tr>
+          <tr><td>Backdoor access</td><td style="color:#4ade80">✔</td><td style="color:#4ade80">✔</td></tr>
+          <tr><td>Mirror / predicted value</td><td style="color:#4ade80">✔</td><td style="color:#f87171">✘</td></tr>
+          <tr><td>Built-in comparison</td><td style="color:#4ade80">✔</td><td style="color:#f87171">✘</td></tr>
+          <tr><td>Burst read/write</td><td style="color:#f87171">✘</td><td style="color:#4ade80">✔</td></tr>
+          <tr><td>Field-level access</td><td style="color:#4ade80">✔</td><td style="color:#f87171">✘</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /ral-mem -->
+
+  <!-- ── TAB: PREDICTOR ── -->
+  <div id="ral-predict" class="rtab-content">
+
+    <div class="rcard">
+      <div class="rcard-title">What is the Predictor?</div>
+      <p>Every RAL register has a <em>mirror value</em> (what RAL thinks the hardware holds) and a <em>desired value</em>. The predictor keeps these in sync by calling <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">predict()</code> on a register whenever an access occurs. Three prediction modes exist:</p>
+      <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin:0.8rem 0;">
+        <span style="padding:0.3rem 0.8rem;border-radius:20px;background:rgba(245,158,11,0.15);color:#fbbf24;font-size:0.78rem;font-weight:700">Implicit</span>
+        <span style="padding:0.3rem 0.8rem;border-radius:20px;background:rgba(0,212,255,0.12);color:#00d4ff;font-size:0.78rem;font-weight:700">Explicit</span>
+        <span style="padding:0.3rem 0.8rem;border-radius:20px;background:rgba(52,211,153,0.12);color:#34d399;font-size:0.78rem;font-weight:700">Passive</span>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">① Implicit Prediction</div>
+      <p>Simplest approach. The RAL base class automatically calls <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">predict()</code> after every <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">write()</code>/<code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">read()</code> initiated via the RAL API. Enable with:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">env.sv</span><span class="code-lang">SystemVerilog</span></div>
+        <div class="code-body"><span class="kw">function void</span> <span class="fn">connect_phase</span>(uvm_phase phase);
+  regmodel.default_map.<span class="fn">set_auto_predict</span>(<span class="num">1</span>);  <span class="cm">// disabled by default</span>
+<span class="kw">endfunction</span></div>
+      </div>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_8.jpg" alt="Implicit prediction flow">
+        <div class="fig-cap">Figure 2 — Implicit prediction flow</div>
+      </div>
+      <div class="info-box tip">
+        <strong>When to use</strong>
+        Best for simple testbenches where all register accesses go through the RAL API. No extra infrastructure needed.
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">② Explicit Prediction</div>
+      <p>A <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_reg_predictor</code> component is connected to the monitor. The monitor captures bus transactions; the predictor converts them (via the adapter) into register operations and calls <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">predict()</code>. This keeps the mirror accurate even for accesses not initiated by the test.</p>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_8.jpg" alt="Explicit prediction flow">
+        <div class="fig-cap">Figure 3 — Explicit prediction flow</div>
+      </div>
+      <p>Three implementation steps:</p>
+      <div class="pred-steps">
+        <div class="pred-step">
+          <div class="ps-num amber">1</div>
+          <div class="ps-body">
+            <div class="ps-title">Creation</div>
+            <div class="ps-desc">Instantiate <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:var(--accent)">uvm_reg_predictor#(bus_item)</code> in <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:var(--accent)">build_phase</code>.</div>
+          </div>
+        </div>
+        <div class="pred-step">
+          <div class="ps-num cyan">2</div>
+          <div class="ps-body">
+            <div class="ps-title">Configuration</div>
+            <div class="ps-desc">Set <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:var(--accent)">.map</code> and <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:var(--accent)">.adapter</code> handles on the predictor instance.</div>
+          </div>
+        </div>
+        <div class="pred-step">
+          <div class="ps-num green">3</div>
+          <div class="ps-body">
+            <div class="ps-title">Connection</div>
+            <div class="ps-desc">Connect monitor's analysis port to predictor's <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:var(--accent)">bus_in</code> analysis imp.</div>
+          </div>
+        </div>
+      </div>
+      <div class="fig" style="margin-top:0.5rem">
+        <img src="https://static.designandreuse.com/news_img19/20190902_8b.gif" alt="Creation">
+        <div class="fig-cap">Step 1 — Creation</div>
+      </div>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_8c.gif" alt="Configuration">
+        <div class="fig-cap">Step 2 — Configuration</div>
+      </div>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_8d.gif" alt="Connection">
+        <div class="fig-cap">Step 3 — Connection</div>
+      </div>
+      <div class="info-box success">
+        <strong>Advantage</strong>
+        Mirror stays accurate even for register writes that happen outside the RAL API (e.g. DMA, CPU accesses). Monitor must filter erroneous transactions before they reach the predictor.
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">③ Passive Prediction</div>
+      <p>Useful when register accesses are <em>not initiated via the RAL model</em> at all (e.g. a CPU subsystem in a full-chip testbench). The predictor observes all bus traffic passively and updates the mirror based on observed transactions. Structurally very similar to explicit prediction — same three-step setup — but <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">set_auto_predict</code> is left disabled.</p>
+      <div class="info-box warn">
+        <strong>Key difference vs Explicit</strong>
+        Explicit prediction assumes RAL is the <em>initiator</em> of some accesses; Passive prediction is appropriate when RAL is purely an <em>observer</em> — it never drives any bus transaction.
+      </div>
+    </div>
+
+  </div><!-- /ral-predict -->
+
+  <!-- ── TAB: COVERAGE ── -->
+  <div id="ral-cov" class="rtab-content">
+
+    <div class="rcard">
+      <div class="rcard-title">RAL Coverage Hooks</div>
+      <p>UVM RAL provides a <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">sample()</code> virtual method in both <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_reg_block</code> and <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">uvm_reg</code>. Override it to trigger your covergroup whenever a register is accessed. Register prediction must be enabled for coverage to fire correctly.</p>
+      <div class="info-box tip">
+        <strong>Requirement</strong>
+        Coverage sampling only fires automatically when a prediction mode is active. Enable <code style="font-family:'JetBrains Mono',monospace">set_auto_predict(1)</code> or use explicit/passive prediction.
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">Coverage inside uvm_reg_block</div>
+      <p>Override <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">sample()</code> in the extended block to cover which registers are being accessed and with what operations:</p>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_9.jpg" alt="Covergroup in uvm_reg_block">
+        <div class="fig-cap">Covergroup in extended uvm_reg_block — per-register operation coverage</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">Coverage inside uvm_reg</div>
+      <p>Override <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">sample()</code> in the extended register class to cover the range of values written/read to each field:</p>
+      <div class="fig">
+        <img src="https://static.designandreuse.com/news_img19/20190902_10.jpg" alt="Covergroup in uvm_reg">
+        <div class="fig-cap">Covergroup in extended uvm_reg — per-value field coverage</div>
+      </div>
+      <div class="info-box success">
+        <strong>Selective Sampling</strong>
+        Pass a <code style="font-family:'JetBrains Mono',monospace">uvm_reg_cvr_t</code> coverage type identifier to <code style="font-family:'JetBrains Mono',monospace">sample()</code> to target only specific covergroups — useful when some covergroups are expensive and should only fire on certain access types.
+      </div>
+    </div>
+
+  </div><!-- /ral-cov -->
+
+  <!-- ── TAB: BUILT-IN SEQUENCES ── -->
+  <div id="ral-seq" class="rtab-content">
+
+    <div class="rcard">
+      <div class="rcard-title">Pre-defined Register Sequences</div>
+      <p>UVM ships a library of ready-made register test sequences. Point any of them at your RAL block and they exercise the entire register/memory space automatically. Individual registers or memories can be excluded by setting the <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">NO_REG_TEST</code> or <code style="font-family:'JetBrains Mono',monospace;color:var(--accent)">NO_MEM_TEST</code> attribute on that register/memory instance.</p>
+      <table class="seq-table">
+        <thead>
+          <tr><th>Sequence</th><th>What it checks</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="mono">uvm_reg_hw_reset_seq</span></td>
+            <td>Reads every register and verifies the value matches the declared reset value.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_reg_bit_bash_seq</span></td>
+            <td>Walks 1s and 0s through every bit of every register; checks the result based on the field's access policy.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_reg_access_seq</span></td>
+            <td>Frontdoor write → backdoor read check; then backdoor write → frontdoor read check. Validates both paths agree.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_mem_walk_seq</span></td>
+            <td>Writes a walking-1s/0s pattern to each memory location and compares with the readback.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_mem_access_seq</span></td>
+            <td>Same frontdoor↔backdoor cross-check as <span class="mono">uvm_reg_access_seq</span>, applied to every memory location.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_reg_shared_access_seq</span></td>
+            <td>Writes each register via every available address map; reads back via all maps to confirm consistency.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_mem_shared_access_seq</span></td>
+            <td>Same multi-map cross-check for every memory location.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_reg_mem_shared_access_seq</span></td>
+            <td>Runs <span class="mono">uvm_reg_shared_access_seq</span> followed by <span class="mono">uvm_mem_shared_access_seq</span>.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_reg_mem_built_in_seq</span></td>
+            <td>Umbrella sequence — runs a configurable selection of all the above sequences in one shot.</td>
+          </tr>
+          <tr>
+            <td><span class="mono">uvm_reg_mem_hdl_paths_seq</span></td>
+            <td>Verifies that every declared backdoor HDL path resolves to a valid RTL node.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-title">Running a Built-in Sequence</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">reg_test.sv</span><span class="code-lang">SystemVerilog</span></div>
+        <div class="code-body"><span class="cm">// Example: run hw_reset_seq on entire register block</span>
+<span class="cls">uvm_reg_hw_reset_seq</span> rst_seq;
+rst_seq = <span class="cls">uvm_reg_hw_reset_seq</span>::<span class="fn">type_id::create</span>(<span class="str">"rst_seq"</span>);
+rst_seq.model = regmodel;          <span class="cm">// point at your reg block</span>
+rst_seq.<span class="fn">start</span>(<span class="kw">null</span>);             <span class="cm">// no sequencer needed for backdoor</span>
+
+<span class="cm">// Example: umbrella sequence — run all tests</span>
+<span class="cls">uvm_reg_mem_built_in_seq</span> all_seq;
+all_seq = <span class="cls">uvm_reg_mem_built_in_seq</span>::<span class="fn">type_id::create</span>(<span class="str">"all_seq"</span>);
+all_seq.model = regmodel;
+all_seq.tests = <span class="cls">UVM_DO_ALL_REG_MEM_TESTS</span>;
+all_seq.<span class="fn">start</span>(<span class="kw">null</span>);</div>
+      </div>
+      <div class="info-box tip">
+        <strong>Excluding a register</strong>
+        Call <code style="font-family:'JetBrains Mono',monospace">my_reg.set_attribute("NO_REG_TEST", 1)</code> before running the sequence to skip that register in all built-in tests.
+      </div>
+    </div>
+
+  </div><!-- /ral-seq -->
+
+</div>
+<!-- ── end sec-ral ─────────────────────────────────────────────── -->
 
 </main>
 </div>
@@ -4165,7 +4949,19 @@ seq = <span class="cls">piso_seq</span>::<span class="fn">type_id</span>::<span 
 
 
 <script>
-// ── FACTORY TABS ────────────────────────────────────────
+function showRalTab(tabId) {
+  const bar = document.getElementById('ral-tabs');
+  if (!bar) return;
+  bar.querySelectorAll('.rtab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#sec-ral .rtab-content').forEach(t => t.classList.remove('active'));
+  const tab = document.getElementById(tabId);
+  if (tab) tab.classList.add('active');
+  bar.querySelectorAll('.rtab-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId)) b.classList.add('active');
+  });
+}
+
+
 function showFTab(id) {
   const bar = document.getElementById('factory-tabs');
   bar.querySelectorAll('.ftab-btn').forEach(b => b.classList.remove('active'));
